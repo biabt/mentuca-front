@@ -3,8 +3,14 @@
     "name": "mobile",
     "slug": "mobile",
     "version": "1.0.0",
-    "sdkVersion": "50.0.0",
-    "platforms": ["ios", "android"],
-    "orientation": "portrait"
+    "sdkVersion": "53.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "orientation": "portrait",
+    "android": {
+      "package": "com.anonymous.mobile"
+    }
   }
 }

@@ -3,10 +3,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AuthStack from "./AuthStack";
 import AppTabs from "./AppTabs";
 
-// Fake auth state (replace with real logic later)
-const isLoggedIn = false;
+export type RootStackParamList = {
+  Auth: undefined;
+  App: undefined;
+};
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+// Simule auth state real
+const isLoggedIn = false;
 
 export default function RootNavigator() {
   return (
