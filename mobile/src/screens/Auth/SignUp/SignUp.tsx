@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,10 +11,12 @@ import {
 import CustomInput from "../../../components/Input";
 import CustomButton from "../../../components/Button";
 import CustomTitle from "../../../components/Title";
+import api from "../../../services/api";
 import styles from "./styles";
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -43,20 +45,37 @@ export default function SignUpScreen({ navigation }) {
     validatePassword();
   }, [password, confirmPassword]);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (!isPasswordValid) {
       Alert.alert("Erro", "As senhas devem coincidir");
       return;
     }
 
-    if (username.length == 0 || email.length == 0 || password.length == 0){
+    if (!username || !email || !password || !name) {
       Alert.alert("Erro", "Todos os campos devem estar preenchidos");
+      console.log(error);
       return;
     }
 
-    // Proceed with sign up
-    Alert.alert("Cadastro realizado!", `Bem-vindo, ${username}!`);
-    navigation.navigate("Login")
+    try {
+      const signUpInfo = {
+        name: name,
+        username: username,
+        email: email,
+        password: password
+      };
+
+      const response = await api.post("/register", signUpInfo);
+      Alert.alert("Sucesso", response.data.message);
+      navigation.navigate("Login");
+
+    } catch (error: any) {
+      if (error.response) {
+        Alert.alert("Erro", error.response.data.detail);
+      } else {
+        Alert.alert("Erro", "Erro ao conectar com o servidor.");
+      }
+    }
   };
 
   return (
@@ -72,6 +91,16 @@ export default function SignUpScreen({ navigation }) {
           title="Crie sua conta"
           subtitle="Preencha os campos abaixo para começar"
         />
+
+        <View style={styles.inputSpacing}>
+          <CustomInput
+            label="Nome"
+            placeholder="Digite seu nome"
+            value={name}
+            onChangeText={setName}
+            required
+          />
+        </View>
 
         <View style={styles.inputSpacing}>
           <CustomInput
