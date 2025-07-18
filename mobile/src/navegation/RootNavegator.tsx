@@ -2,18 +2,13 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AuthStack from "./AuthStack";
 import AppTabs from "./AppTabs";
+import { useAuth } from "../context/AuthContext";
 
-export type RootStackParamList = {
-  Auth: undefined;
-  App: undefined;
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-// Simule auth state real
-const isLoggedIn = false;
+const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
+  const { isLoggedIn } = useAuth();
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
