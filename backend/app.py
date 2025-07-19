@@ -10,14 +10,14 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Em desenvolvimento pode ser "*"
+    allow_origins=["http://localhost:8081", "http://10.0.2.2:8081"],  # Em desenvolvimento pode ser "*"
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(
-    GZipMiddleware, minimum_size=500
-)  # Comprime respostas maiores que 500 bytes
+#app.add_middleware(
+    #GZipMiddleware, minimum_size=500
+#)  # Comprime respostas maiores que 500 bytes
 
 Base.metadata.create_all(bind=engine)
 

@@ -11,6 +11,7 @@ macro_router = APIRouter(prefix="/macroareas")
 
 @macro_router.get("/", response_model=List[MacroareaResponse])
 def get_all_macros(db: Session = Depends(get_db)):
+    print("fazendo query de macroareas")
     return db.query(Macroarea).all()
 
 @macro_router.get("/by-name/{name}", response_model=List[MacroareaResponse])
