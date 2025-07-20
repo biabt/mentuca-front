@@ -2,6 +2,7 @@ import { View, Text, Button } from "react-native";
 import { useAuth } from "../../context/AuthContext"
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import MudarTrilha from "../../components/MudarTrilha";
 
 export default function Home() {
   const { logout } = useAuth();
@@ -32,6 +33,7 @@ export default function Home() {
         </View>
       ))}
       </View>
+      <MudarTrilha mesoarea="sla" macroarea="Biologia"></MudarTrilha>
     </View>
   );
 }

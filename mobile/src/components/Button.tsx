@@ -40,7 +40,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   };
   const [changeFill, setChangeFilled] = useState(fill);
   const backgroundColor = changeFill ? Colors.primary : "transparent";
-  const textColor = changeFill ? Colors.background : Colors.primary;
+  const textColor = changeFill ? Colors.background.ligth : Colors.primary;
   const borderColor = Colors.primary;
 
   const handlePress = () => {

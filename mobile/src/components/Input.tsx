@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 8,
     paddingHorizontal: Spacing.medium,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.background.ligth,
   },
   input: {
     flex: 1,

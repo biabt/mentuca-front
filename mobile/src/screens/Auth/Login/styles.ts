@@ -4,7 +4,7 @@ import { Colors, Fonts, Spacing } from "../../../themes";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.background.ligth,
     paddingHorizontal: Spacing.large,
     justifyContent: "center",
   },
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContainer: {
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.background.ligth,
     padding: Spacing.xlarge,
     borderRadius: 12,
     width: "85%",
