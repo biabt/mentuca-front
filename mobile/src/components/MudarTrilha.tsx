@@ -4,7 +4,8 @@ import {
   Text,
   View,
   StyleSheet,
-  Modal
+  Modal,
+  ScrollView
 } from "react-native";
 import { Colors, Fonts, Spacing} from "../themes";
 import { Ionicons } from '@expo/vector-icons'; 
@@ -22,19 +23,35 @@ const MudarTrilha: React.FC<MudarTrilhaProps> = ({
     mesoarea,
 }) => {
 
-
-
-    const [currentMacro, setCurrentMacro] = useState({macroarea});
-
     const [isModalMacroVisible, setIsModalMacroVisible] = useState(false);
-    const [isModalMesoVisible, setIsModalMesoVisible] = useState(false);
-
+    const [isModalMesoVisible, setIsModalMesoVisible] = useState(false)
     const [macros, setMacros] = useState([]);
+
+    const [selectedMacro, setSelectedMacro] = useState("");
+    const [selectedMeso, setSelectedMeso] = useState("");
+
+    const handleMacroPress = async (macroName: string) => {
+    setSelectedMacro(macroName);
+    await fetchMesos(macroName);
+    setIsModalMacroVisible(false);
+    setIsModalMesoVisible(true);
+    };
+
+    const [mesos, setMesos] = useState([]);
+  
+  
+    const fetchMesos = async (macroName: string) => {
+        try {
+        const response = await api.get(`/mesoareas/by-macroarea/${encodeURIComponent(macroName)}`);
+        setMesos(response.data);
+        } catch (error) {
+        console.error("Erro ao buscar mesoáreas:", error);
+        }
+    };
   
     useEffect(() => {
     const fetchMacros = async () => {
       try {
-        console.log("pushando api.get")
         const response = await api.get("/macroareas/");
         setMacros(response.data);
       } catch (error) {
@@ -67,15 +84,17 @@ const MudarTrilha: React.FC<MudarTrilhaProps> = ({
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContainer}>
                         <CustomTitle title="Selecione uma Matéria" subtitle="Escolha uma macroárea para continuar"/>
+                        <ScrollView style={styles.scrollView} horizontal={false} showsHorizontalScrollIndicator={false}>
                         {macros.map((item) => (
-                          <View>
                             <Macroarea
-                            macroarea={item.nome}
-                            nivel_macroarea={3.2}
-                            description = {"oiee"}
-                        />
-                          </View>
-                        ))}
+                                key={item.id}
+                                nome={item.nome}
+                                friendly_name={item.friendly_name}
+                                nivel={3.2}
+                                onPress={() => handleMacroPress(item.nome)}
+                            />
+                            ))}
+                        </ScrollView>
                         <TouchableOpacity
                           style={styles.modalCloseButton}
                           onPress={() => setIsModalMacroVisible(false)}
@@ -85,6 +104,36 @@ const MudarTrilha: React.FC<MudarTrilhaProps> = ({
                     </View>
                 </View>
             </Modal>
+
+            <Modal
+                visible={isModalMesoVisible}
+                transparent
+                animationType="slide"
+                onRequestClose={() => setIsModalMesoVisible(false)}
+                >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                    <CustomTitle title="Escolha uma trilha" subtitle={`Macroárea: ${selectedMacro}`} />
+                    <ScrollView style={styles.scrollView}>
+                        {mesos.map((item) => (
+                        <Macroarea
+                                key={item.id}
+                                nome={item.nome}
+                                friendly_name={item.friendly_name}
+                                nivel={3.2}
+                                description={item.descricao}
+                            />
+                        ))}
+                    </ScrollView>
+                    <TouchableOpacity
+                        style={styles.modalCloseButton}
+                        onPress={() => {setIsModalMesoVisible(false); setIsModalMacroVisible(true)}}
+                    >
+                        <Ionicons name="chevron-back-outline" size={24} />
+                    </TouchableOpacity>
+                    </View>
+                </View>
+                </Modal>
         </View>
     );
 };
@@ -108,6 +157,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-around",
   },
+  scrollView: {
+    maxHeight: "70%",
+    width: "100%",
+  },
   iconButton: {
     marginVertical: Spacing.small,
     margin: Spacing.small,
@@ -123,17 +176,18 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: Colors.background.ligth,
-    padding: Spacing.xlarge,
+    padding: Spacing.small,
     borderRadius: 12,
     width: "85%",
+    alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
   },
   modalCloseButton: {
     position: "absolute",
-    top: Spacing.small,
-    left: Spacing.medium,
+    top: Spacing.large,
+    left: Spacing.large,
     zIndex: 1,
   },
   modalCloseIcon: {

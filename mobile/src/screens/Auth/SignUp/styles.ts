@@ -4,9 +4,15 @@ import { Colors, Fonts, Spacing } from "../../../themes";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.background.ligth,
     paddingHorizontal: Spacing.large,
     justifyContent: "center",
+  },
+  scrollView: {
+    maxHeight: "80%"
+  },
+  innerContainer: {
+    maxHeight: "80%",
   },
   inputSpacing: {
     marginTop: Spacing.medium,
