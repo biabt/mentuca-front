@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: Colors.background.medium,
     padding: Spacing.small,
-    borderRadius: 8,
+    borderRadius: Spacing.boderRadius,
   },
   innerContainer: {
     marginVertical: Spacing.small,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     margin: Spacing.small,
     backgroundColor: Colors.pink.ligth,
     padding: Spacing.small,
-    borderRadius: 8,
+    borderRadius: Spacing.boderRadius,
   },
   modalOverlay: {
     flex: 1,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: Colors.background.ligth,
     padding: Spacing.small,
-    borderRadius: 12,
+    borderRadius: Spacing.boderRadius,
     width: "85%",
     alignSelf: "center",
     alignItems: "center",

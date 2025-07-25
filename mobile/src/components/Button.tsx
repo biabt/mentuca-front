@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TouchableOpacity,
   Text,
@@ -6,7 +6,7 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import { Colors, Fonts, Spacing} from "../themes";
+import { Colors, Fonts, Spacing } from "../themes";
 
 type ButtonSize = "small" | "medium" | "large";
 
@@ -14,6 +14,7 @@ interface CustomButtonProps {
   title: string;
   size?: ButtonSize;
   fill?: boolean;
+  disabled?: boolean;
   onPress: () => void;
   style?: ViewStyle;
   textStyle?: TextStyle;
@@ -22,7 +23,8 @@ interface CustomButtonProps {
 const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   size,
-  fill,
+  fill = false,
+  disabled = false,
   onPress,
   style,
   textStyle,
@@ -38,25 +40,22 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         return { paddingVertical: 12, paddingHorizontal: 64 };
     }
   };
-  const [changeFill, setChangeFilled] = useState(fill);
-  const backgroundColor = changeFill ? Colors.primary : "transparent";
-  const textColor = changeFill ? Colors.background.ligth : Colors.primary;
-  const borderColor = Colors.primary;
 
-  const handlePress = () => {
-    setChangeFilled((prev) => !prev);
-    onPress(); 
-  };
+  const backgroundColor = fill ? Colors.primary : "transparent";
+  const textColor = fill ? Colors.background.ligth : Colors.primary;
+  const borderColor = Colors.primary;
 
   return (
     <TouchableOpacity
-      onPress={handlePress}
+      onPress={onPress}
+      disabled={disabled}
       style={[
         styles.button,
         getSizeStyle(),
         {
           backgroundColor,
           borderColor,
+          opacity: disabled ? 0.5 : 1,
         },
         style,
       ]}
@@ -73,7 +72,7 @@ export default CustomButton;
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 12,
+    borderRadius: Spacing.boderRadius,
     borderWidth: 1.5,
     alignItems: "center",
     justifyContent: "center",
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: Fonts.medium,
     fontSize: Fonts.size.medium,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontWeight: "bold",
+    textTransform: "uppercase",
   },
 });

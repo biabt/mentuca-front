@@ -4,5 +4,6 @@ const Spacing = {
   medium: 16,
   large: 20,
   xlarge: 24,
+  boderRadius: 12,
 };
 export default Spacing;

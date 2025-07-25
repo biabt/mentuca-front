@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: Colors.background.ligth,
     padding: Spacing.xlarge,
-    borderRadius: 12,
+    borderRadius: Spacing.boderRadius,
     width: "85%",
     alignItems: "center",
     justifyContent: "center",

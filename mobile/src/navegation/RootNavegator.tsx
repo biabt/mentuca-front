@@ -10,7 +10,7 @@ export default function RootNavigator() {
   const { isLoggedIn } = useAuth();
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
         <Stack.Screen name="App" component={AppTabs} />
       ) : (

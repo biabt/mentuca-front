@@ -8,7 +8,7 @@ interface QuestionRendererProps {
   questionType: string;
   questionJson: Question;
   prova?: string;
-  onAnswer: (isCorrect: boolean) => void;
+  onAnswer: () => void;
 }
 
 const QuestionRenderer: React.FC<QuestionRendererProps> = ({
@@ -19,7 +19,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({
  }) => {
   switch (questionType) {
     case 'multiple_choice':
-      return <MultipleChoiceQuestion questionJson={questionJson as MultipleChoiceInterface} onAnswer={onAnswer}/>;
+      return <MultipleChoiceQuestion questionJson={questionJson as MultipleChoiceInterface} prova={prova} onAnswer={onAnswer}/>;
     case 'match_cards':
       return <MatchCardQuestion questionJson={questionJson as MatchCardInterface} onAnswer={onAnswer}/>;
     default:
